@@ -1,5 +1,54 @@
 ---
-- name: Verify
+- name: Default | Verify
   hosts: all
-  gather_facts: false
-  tasks: []
+  gather_facts: true
+  tasks:
+
+    - name: Verify | Include variables
+      ansible.builtin.include_vars: variables.yml
+
+    - name: Verify | Include distribution relevant variables
+      ansible.builtin.include_vars: "../../vars/{{ ansible_os_family | lower }}.yml"
+
+    - name: Verify | Ensure package is installed
+      ansible.builtin.package:
+        name: "{{ timewarrior_packages }}"
+        state: present
+        check_mode: true
+      register: __package_output
+      failed_when: __package_output.changed
+
+    - name: Verify | Config directory has been created
+      ansible.builtin.file:
+        state: directory
+        path: "{{ timewarrior_configdir }}"
+        owner: "{{ timewarrior_username }}"
+        group: "{{ timewarrior_groupname }}"
+        mode: '0750'
+      check_mode: true
+      register: __configdir_output
+      failed_when: __configdir_output.changed
+
+    - name: Verify | Datadir directory has been created
+      ansible.builtin.file:
+        state: directory
+        path: "{{ timewarrior_datadir }}"
+        owner: "{{ timewarrior_username }}"
+        group: "{{ timewarrior_groupname }}"
+        mode: '0755'
+      check_mode: true
+      register: __datadir_output
+      failed_when: __datadir_output.changed
+
+    - name: Verify | Extension directory has been created
+      ansible.builtin.file:
+        state: directory
+        path: "{{ timewarrior_extensiondir }}"
+        owner: "{{ timewarrior_username }}"
+        group: "{{ timewarrior_groupname }}"
+        mode: '0755'
+      check_mode: true
+      register: __extensiondir_output
+      failed_when: __extensiondir_output.changed
+
+

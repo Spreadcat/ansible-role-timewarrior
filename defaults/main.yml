@@ -1,2 +1,68 @@
 ---
 # defaults file for spreadcat.timewarrior
+# List of packages to install
+#
+# Example:
+#   timewarrior_packages:
+#     - timew
+timewarrior_packages:
+  - timew
+
+# Sets the state of the package to install
+#
+# Example:
+#   timewarrior_pcakage_state: "present"
+timewarrior_package_state: "present"
+
+# Sets the path to the config directory.
+#
+# The parent directory must exist
+#
+# Example:
+#   timewarrior_configdir: /data/timewarrior
+timewarrior_configdir: "{{ lookup('ansible.builtin.emv', 'HOME') }}/.timewarrior"
+
+# Sets the data directory.
+#
+# The parent directory must exist.
+#
+# Example:
+#   timewarrior_datadir: /data/timewarrior
+timewarrior_datadir: "{{ timewarrior_configdir }}/data"
+
+# Sets the path to the extension directory.
+#
+# This directory should be a sub directory of the configuration directory.
+#
+# Example:
+#   timewarrior_extensiondir: "/data/timewarrior/extensions"
+timewarrior_extensiondir: "{{ timewarrior_configdir }}/extensions"
+
+# Sets the username for the timewarrior user.
+#
+# Example:
+#   timewarrior_username: john
+timewarrior_username: "{{ lookup('ansible.builtin.env', 'USER') }}"
+
+# Sets the group name for the timewarrior user.
+#
+# Defaults to the username.
+#
+# Example:
+#   timewarrior_groupname: john
+timewarrior_groupname: "{{ lookup('ansible.builtin.env', 'USER') }}"
+
+# Defines a list of extensions to install into the extensions directory.
+#
+# Example:
+#   timewarrior_extensions:
+#     - /home/john/tmw/extension1.py
+#     - /home/john/tmw/extension2.py
+timewarrior_extensions: []
+
+# Sets the configuration values for timewarrior
+#
+# Example:
+#   timewarrior_config:
+#     verbose: yes
+timewarrior_config: []

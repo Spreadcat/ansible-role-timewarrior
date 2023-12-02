@@ -1,0 +1,8 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+
+    - name: "Molecule | Include role spreadcat.timewarrior"
+      ansible.builtin.include_role:
+        name: "spreadcat.timewarrior"

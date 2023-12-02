@@ -1,0 +1,56 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: podman
+platforms:
+
+  - name: fedora36
+    image: localhost/fedora36-ansible-nonroot
+    tmpsfs: ['/run', '/tmp']
+    volumes: ['/sys/fs/cgroup:/sys/fs/cgroup:ro']
+    capabilities: ['SYS_ADMIN']
+    command: /lib/systemd/systemd
+    pre_build_image: true
+  - name: fedora37
+    image: localhost/fedora37-ansible-nonroot
+    tmpsfs: ['/run', '/tmp']
+    volumes: ['/sys/fs/cgroup:/sys/fs/cgroup:ro']
+    capabilities: ['SYS_ADMIN']
+    command: /lib/systemd/systemd
+    pre_build_image: true
+  - name: ubuntu20.04
+    image: localhost/ubuntu2004-ansible-nonroot
+    tmpsfs: ['/run', '/tmp']
+    volumes: ['/sys/fs/cgroup:/sys/fs/cgroup:ro']
+    capabilities: ['SYS_ADMIN']
+    command: /lib/systemd/systemd
+    pre_build_image: true
+  - name: ubuntu22.04
+    image: localhost/ubuntu2204-ansible-nonroot
+    tmpsfs: ['/run', '/tmp']
+    volumes: ['/sys/fs/cgroup:/sys/fs/cgroup:ro']
+    capabilities: ['SYS_ADMIN']
+    command: /lib/systemd/systemd
+    pre_build_image: true
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      interpreter_python: auto_silent
+      callbacks_enabled: profile_tasks, timer, yaml
+    ssh_connections:
+      pipelining: true
+verifier:
+  name: ansible
+scenario:
+  name: extensions
+  test_sequence:
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - verify
+    - destroy
