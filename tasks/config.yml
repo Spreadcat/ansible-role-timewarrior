@@ -1,0 +1,5 @@
+---
+# Configuration parts of the role.
+- name: Config | Debug output.
+  ansible.builtin.debug:
+    msg: "Running config tasks."

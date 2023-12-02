@@ -1,0 +1,10 @@
+---
+# This file being placed in `/molecule` in the role directory will be loaded
+# when running fule on the role.
+# Variable defined here will be loaded automatically and used during the
+# deployment.
+
+# Example:
+# fule_replace_meta_file: true
+# fule_molecule_scenarios:
+#   - scenario1
