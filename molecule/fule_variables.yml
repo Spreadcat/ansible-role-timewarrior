@@ -8,3 +8,4 @@
 # fule_replace_meta_file: true
 fule_molecule_scenarios:
   - extensions
+  - holidays

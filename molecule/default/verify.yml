@@ -50,5 +50,3 @@
       check_mode: true
       register: __extensiondir_output
       failed_when: __extensiondir_output.changed
-
-

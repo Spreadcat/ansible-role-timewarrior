@@ -1,5 +1,15 @@
 ---
-- name: Verify
+- name: Extensions | Verify
   hosts: all
   gather_facts: false
-  tasks: []
+  tasks:
+
+    - name: Verify | Include variables
+      ansible.builtin.include_vars: variables.yml
+
+    - name: Verify | Check extension deployment
+      ansible.builtin.file:
+        path: /home/ansible/.timewarrior/extensions/test_extension.py
+        owner: "{{ timewarrior_username }}"
+        group: "{{ timewarrior_groupname }}"
+        mode: '0750'

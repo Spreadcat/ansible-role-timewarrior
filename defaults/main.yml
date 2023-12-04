@@ -20,7 +20,7 @@ timewarrior_package_state: "present"
 #
 # Example:
 #   timewarrior_configdir: /data/timewarrior
-timewarrior_configdir: "{{ lookup('ansible.builtin.emv', 'HOME') }}/.timewarrior"
+timewarrior_configdir: "{{ lookup('ansible.builtin.env', 'HOME') }}/.timewarrior"
 
 # Sets the data directory.
 #
@@ -65,4 +65,12 @@ timewarrior_extensions: []
 # Example:
 #   timewarrior_config:
 #     verbose: yes
-timewarrior_config: []
+timewarrior_config: {}
+
+# Adds the holidays for the list of locale to the configuration.
+#
+# Example:
+#   timewarrior_locales:
+#     - no_NB
+#     - en-US
+timewarrior_locales: []

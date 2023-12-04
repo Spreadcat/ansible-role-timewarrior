@@ -6,3 +6,4 @@
     dest: "{{ timewarrior_configdir }}/timewarrior.cfg"
     owner: "{{ timewarrior_username }}"
     group: "{{ timewarrior_groupname }}"
+    mode: '0644'
