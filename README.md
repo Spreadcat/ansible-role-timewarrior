@@ -41,6 +41,10 @@ passed in as parameters) is always nice for users too:
       x: 42
 ```
 
+## Limitations
+
+* The role does not support configuring a work week in the configuration file.
+
 ## License
 
 MIT
