@@ -1,25 +1,25 @@
 # Role spreadcat.timewarrior
 
-A brief description of the role goes here.
+A simple role to manage a local timewarrior installation.
 
 ## Requirements
 
-Any pre-requisites that may not be covered by Ansible itself or the role
-should be mentioned here. For instance, if the role uses the EC2 module,
-it may be a good idea to mention in this section that the boto package is
-required.
+* `gather_facts: true`
+* Repository files for timewarrior either as RPM or DEB package.
 
 ## Role Variables
 
-A description of the settable variables for this role should go here, including
-any variables that are in defaults/main.yml, vars/main.yml, and any variables
-that can/should be set via parameters to the role. Any variables that are read
-from other roles and/or the global scope (ie. hostvars, group vars, etc.)
-should be mentioned here as well.
+For a list of variables, their settings and examples please see [`./defaults/main.yml`](./defaults/main.yml).
+
+The main parameters you want to probably set are_
+
+* `timewarrior_config`
+* `timewarrior_locales`
+* `timewarrior_extensions`
 
 ## Other Variables
 
-A description of variables not usually modified goes here.
+Any other variable is documented in [`./vars/main.yml`](./vars/main.yml).
 
 ## Dependencies
 
