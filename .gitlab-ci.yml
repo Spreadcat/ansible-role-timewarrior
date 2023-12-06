@@ -9,7 +9,7 @@ ansible-lint:
     - ansible-lint --show-relpath
 
 yamllint:
-  state: linting
+  stage: linting
   image: registry.gitlab.com/pipeline-components/yamllint:latest
   script:
     - yamllint .
