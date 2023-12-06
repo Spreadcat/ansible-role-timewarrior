@@ -1,4 +1,7 @@
 ---
+stages:
+  - linting
+
 ansible-lint:
   stage: linting
   image: registry.gitlab.com/pipeline-components/ansible-lint:latest
