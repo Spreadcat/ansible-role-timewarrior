@@ -1,0 +1,9 @@
+---
+# .ansible-lint
+
+profile: null
+
+exclude_paths:
+  - ./molecule/default/variables.yml
+  - ./molecule/extensions/variables.yml
+  - ./molecule/holidays/variables.yml
