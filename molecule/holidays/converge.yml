@@ -1,0 +1,11 @@
+---
+- name: Holidays | Converge
+  hosts: all
+  tasks:
+
+    - name: "Converge | Include variables"
+      ansible.builtin.include_vars: variables.yml
+
+    - name: "Converge | Include role spreadcat.timewarrior"
+      ansible.builtin.include_role:
+        name: "spreadcat.timewarrior"

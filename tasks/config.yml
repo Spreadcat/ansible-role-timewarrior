@@ -1,0 +1,9 @@
+---
+# Configuration parts of the role.
+- name: Config | Manage configuration file
+  ansible.builtin.template:
+    src: timewarrior.cfg.j2
+    dest: "{{ timewarrior_configdir }}/timewarrior.cfg"
+    owner: "{{ timewarrior_username }}"
+    group: "{{ timewarrior_groupname }}"
+    mode: '0644'

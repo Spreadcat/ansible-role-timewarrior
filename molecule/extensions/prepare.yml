@@ -1,0 +1,17 @@
+---
+- name: Extensions | Prepare the environment
+  hosts: all
+  gather_facts: false
+  tasks:
+
+    - name: Prepare | Include variables
+      ansible.builtin.include_vars: variables.yml
+
+    - name: Prepare | Deploy an extension source file
+      become: true
+      ansible.builtin.copy:
+        dest: "/home/ansible/test_extension.py"
+        content: ""
+        owner: "{{ timewarrior_username }}"
+        group: "{{ timewarrior_groupname }}"
+        mode: '0744'

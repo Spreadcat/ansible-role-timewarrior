@@ -1,0 +1,7 @@
+
+{% for key, value in timewarrior_config.items() %}
+{{ key }} = {{ value }}
+{% endfor %}
+{% for locale_file in timewarrior_locales %}
+import {{ __tmw_refresh_script_dir }}/holidays.{{ locale_file }}
+{% endfor %}

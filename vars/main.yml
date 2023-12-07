@@ -1,0 +1,20 @@
+---
+# vars file for spreadcat.timewarrior
+
+# Variable to catch the output when trying to determine where the currenlty
+# installed sript `refresh` for the holidays is being located.
+# It catches the output from the module `ansible.builtin.find`.
+#
+# __find_output
+
+# Variable containing the path of the refresh script.
+# This is either set from the result of the variable `__find_output` or set
+# after the refresh script is deployed by the role.
+#
+# __tmw_refresh_script
+
+# Variable containing the parent directory of the refresh-script for creating the holidays.
+# This is either set from the result of the variable `__find_output` or set
+# after the refresh script is deployed by the role.
+#
+# __tmw_refresh_script_dir

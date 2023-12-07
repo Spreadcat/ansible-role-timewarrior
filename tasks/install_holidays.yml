@@ -1,0 +1,50 @@
+---
+- name: Install holidays | Find Holidays script
+  ansible.builtin.find:
+    paths: "/usr/share"
+    recurse: true
+    use_regex: true
+    pattern: "^refresh$"
+  register: __find_output
+
+- name: Install holidays | Set existing script path
+  when: __find_output.matched == 1
+  ansible.builtin.set_fact:
+    __tmw_refresh_script: "{{ __find_output['files'][0]['path'] }}"
+    __tmw_refresh_script_dir: "{{ __find_output['files'][0]['path'] | dirname }}"
+
+- name: Install holidays | Deploy alternative script if not locally present
+  when: __find_output.matched == 0
+  block:
+
+    - name: Install holidays | Create dir structure
+      become: true
+      ansible.builtin.file:
+        state: directory
+        path: /usr/share/doc/timewarrior/doc/holidays
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Install holidays | Deploy script file
+      ansible.builtin.copy:
+        dest: /usr/share/doc/timewarrior/doc/holidays/refresh
+        src: refresh
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Install holidays | Set deployed script path
+      ansible.builtin.set_fact:
+        __tmw_refresh_script: /usr/share/doc/timewarrior/doc/holidays/refresh
+        __tmw_refresh_script_dir: /usr/share/doc/timewarrior/doc/holidays
+
+- name: Install Holidays | Create locales
+  become: true
+  ansible.builtin.command:
+    cmd: "python3 ./refresh --locale {{ locale_abbr }}"
+    chdir: "{{ __tmw_refresh_script_dir }}"
+    creates: "{{ __tmw_refresh_script_dir }}/holidays.{{ locale_abbr }}"
+  loop: "{{ timewarrior_locales }}"
+  loop_control:
+    loop_var: locale_abbr

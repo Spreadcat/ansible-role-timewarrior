@@ -1,0 +1,45 @@
+---
+- name: Holidays | Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+
+    - name: Verify | Include variables
+      ansible.builtin.include_vars: variables.yml
+
+    - name: Install holidays | Find Holidays script
+      ansible.builtin.find:
+        paths: "/usr/share"
+        recurse: true
+        use_regex: true
+        pattern: "^refresh$"
+      register: __find_output
+
+    - name: Install holidays | Set existing script path
+      when: __find_output.matched == 1
+      ansible.builtin.set_fact:
+        __tmw_refresh_script: "{{ __find_output['files'][0]['path'] }}"
+        __tmw_refresh_script_dir: "{{ __find_output['files'][0]['path'] | dirname }}"
+
+    - name: Verify | Check if locale files have been created
+      ansible.builtin.file:
+        state: file
+        path: "{{ __tmw_refresh_script_dir }}/holidays.{{ locale_abbr }}"
+      check_mode: true
+      failed_when: __verify_locales.changed
+      register: __verify_locales
+      loop: "{{ timewarrior_locales }}"
+      loop_control:
+        loop_var: locale_abbr
+
+    - name: Verify | Check configuration file settings have been updated
+      ansible.builtin.lineinfile:
+        path: "{{ timewarrior_configdir }}/timewarrior.cfg"
+        line: "import {{ __tmw_refresh_script_dir }}/holidays.{{ locale_abbr }}"
+        state: present
+      loop: "{{ timewarrior_locales }}"
+      loop_control:
+        loop_var: locale_abbr
+      check_mode: true
+      register: __verify_config
+      failed_when: __verify_config.changed

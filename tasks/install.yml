@@ -1,0 +1,47 @@
+---
+# Installing parts of the role.
+- name: Install | Update apt-cache
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 14400
+  when: ansible_os_family | lower == 'debian'
+
+- name: Install | Install packages
+  become: true
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: "{{ timewarrior_package_state }}"
+  loop: "{{  timewarrior_packages }}"
+
+- name: Install | Create directories
+  become: true
+  ansible.builtin.file:
+    state: directory
+    path: "{{ item.path }}"
+    owner: "{{ timewarrior_username }}"
+    group: "{{ timewarrior_groupname }}"
+    mode: "{{ item.mode }}"
+  loop:
+    - path: "{{ timewarrior_configdir }}"
+      mode: '0750'
+    - path: "{{ timewarrior_datadir }}"
+      mode: '0755'
+    - path: "{{ timewarrior_extensiondir }}"
+      mode: '0755'
+
+- name: Install | Deploy extensions
+  when: timewarrior_extensions | length > 0
+  ansible.builtin.copy:
+    dest: "{{ timewarrior_extensiondir }}/{{ extension_file | basename }}"
+    src: "{{ extension_file }}"
+    mode: '0750'
+    owner: "{{ timewarrior_username }}"
+    group: "{{ timewarrior_groupname }}"
+    remote_src: true
+  loop: "{{ timewarrior_extensions }}"
+  loop_control:
+    loop_var: extension_file
+
+- name: Install | Include holidays handling
+  ansible.builtin.import_tasks: install_holidays.yml

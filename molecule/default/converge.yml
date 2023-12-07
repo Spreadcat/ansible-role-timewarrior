@@ -1,0 +1,11 @@
+---
+- name: Default | Converge
+  hosts: all
+  tasks:
+
+    - name: Converge | Include variables
+      ansible.builtin.include_vars: variables.yml
+
+    - name: Converge | Inlcude role
+      ansible.builtin.include_role:
+        name: "spreadcat.timewarrior"

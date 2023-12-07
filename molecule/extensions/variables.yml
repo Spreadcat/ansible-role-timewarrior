@@ -1,0 +1,7 @@
+---
+# variables for the scenario
+timewarrior_username: 'ansible'
+timewarrior_groupname: 'ansible'
+timewarrior_configdir: '/home/ansible/.timewarrior'
+timewarrior_extensions:
+  - /home/ansible/test_extension.py

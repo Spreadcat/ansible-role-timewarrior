@@ -1,0 +1,9 @@
+---
+# variables for the scenario
+timewarrior_username: 'ansible'
+timewarrior_groupname: 'ansible'
+timewarrior_configdir: '/home/ansible/.timewarrior'
+timewarrior_datadir: '/home/ansible/.timewarrior/data'
+timewarrior_extensiondir: '/home/ansible/.timewarrior/extensions'
+timewarrior_config:
+  verbose: "yes"
