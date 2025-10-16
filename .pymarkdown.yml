@@ -1,0 +1,9 @@
+---
+plugins:
+  line-length:
+    enabled: false
+  md024:
+    allow_different_nesting: true
+extensions:
+  front-matter:
+    enabled: true
